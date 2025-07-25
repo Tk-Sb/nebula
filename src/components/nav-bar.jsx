@@ -1,6 +1,10 @@
+'use client'
 
+import { useState } from "react"
 
 export default function NavBar() {
+  const [open, setOpen] = useState(false)
+
   const menuItems = [
     {id: 1, text: "work", icon: <></>},
     {id: 2, text: "about", icon: <></>},
@@ -21,15 +25,31 @@ export default function NavBar() {
             </defs>
           </svg>
         </div>
-        <div className="w-6 h-6 lg:hidden ">
+        <div className="w-6 h-6 relative lg:hidden " onClick={() => setOpen(!open)} >
           <svg className="w-full h-full " width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="0.5" y="0.5" width="27" height="27" rx="3.5" stroke="#9038FF"/>
             <path d="M4 7H24" stroke="#9038FF" strokeWidth="2"/>
             <path d="M4 14H24" stroke="#9038FF" strokeWidth="2"/>
             <path d="M4 21H24" stroke="#9038FF" strokeWidth="2"/>
           </svg>
+          {open &&
+            <nav className="w-fit h-fit p-3 absolute -translate-x-28 flex flex-col justify-center items-center gap-3 rounded-lg bg-[#0F0F1A] z-10 ">
+              <button className="w-fit h-fit relative flex overflow-hidden rounded-lg p-0.5 ">
+                <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#9038FF_0%,#FF47AA_100%)]" />
+                <span className="w-fit h-fit flex items-center justify-center p-1.5 rounded-lg text-xs lg:text-2xl font-normal text-white  bg-slate-950 hover:bg-[#9038FF] transition-colors  backdrop-blur-3xl cursor-pointer">
+                  contact us
+                </span>
+              </button>
+              {menuItems.map((item) => (
+                <div key={item.id} className="w-fit h-fit flex gap-2 justify-center items-center text-xs text-white font-normal cursor-pointer ">
+                  {item.icon}
+                  {item.text}
+                </div>
+              ))}
+            </nav>
+          }
         </div>
-        <div className="w-fit h-fit hidden lg:flex justify-center items-center gap-16 ">
+        <nav className="w-fit h-fit hidden lg:flex justify-center items-center gap-16 ">
           {menuItems.map((item) => (
             <div key={item.id} className="w-fit h-fit flex gap-2 justify-center items-center text-2xl text-white font-normal cursor-pointer ">
               {item.icon}
@@ -42,8 +62,7 @@ export default function NavBar() {
               contact us
             </span>
           </button>
-          
-        </div>
+        </nav>
       </div>
     </>
   )
